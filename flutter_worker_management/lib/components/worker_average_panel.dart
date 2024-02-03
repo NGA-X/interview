@@ -6,17 +6,15 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_worker_management/components/edit_info_button.dart';
 import 'package:flutter_worker_management/utils/ny_color.dart';
 
-class HalfwalAcceptancePanel extends StatelessWidget {
+class WorkerAveragePanel extends StatelessWidget {
   final String panelTitle;
-  final String panelDiscription;
-  final String acceptionRate;
+  final String panelDetail;
   VoidCallback? editButtonDidTap;
 
-  HalfwalAcceptancePanel({
+  WorkerAveragePanel({
     super.key,
     required this.panelTitle,
-    required this.panelDiscription,
-    required this.acceptionRate,
+    required this.panelDetail,
     this.editButtonDidTap,
   });
 
@@ -28,32 +26,27 @@ class HalfwalAcceptancePanel extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           border: Border.all(color: NYColor.formColor("#E1E1E1"))),
-      height: 66,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
           Container(
-            width: 60,
+            width: 155,
             child: Text(
               panelTitle,
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.left,
               style:
                   TextStyle(fontSize: 12, color: NYColor.formColor("#111111")),
             ),
           ),
           Expanded(
+            child: Container(),
             flex: 1,
-            child: Text(
-              panelDiscription,
-              textAlign: TextAlign.center,
-              style:
-                  TextStyle(fontSize: 12, color: NYColor.formColor("#111111")),
-            ),
           ),
           EditInfoButton(
-            acceptionRate: acceptionRate,
+            acceptionRate: panelDetail,
             editButtonDidTap: editButtonDidTap,
+            maxWidth: 68,
           )
         ],
       ),
