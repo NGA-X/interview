@@ -232,10 +232,41 @@ class _EditPageState extends State<EditPage> {
     }
     Map<String, String> acceptance = {
       "careerName": values[0],
-      "acceptionRate": values[1]
+      "acceptionRate": values[1] + "%",
     };
     acceptanceList.add(acceptance);
     if (panelID == PanelID.manAcceptanceList) {
+      setState(() {
+        widget.manAcceptanceList = acceptanceList;
+      });
+    } else {
+      setState(() {
+        widget.womanAcceptanceList = acceptanceList;
+      });
+    }
+  }
+
+  /// Delete
+  void _deleteParentAcceptanceRateList(PanelID panelId, int? itemIndex) {
+    print("?????");
+    print(itemIndex);
+    print(panelId);
+    if (itemIndex == null) {
+      return;
+    }
+
+    List<Map<String, String>>? acceptanceList =
+        panelId == PanelID.manAcceptanceList
+            ? widget.manAcceptanceList
+            : widget.womanAcceptanceList;
+    if (acceptanceList == null) {
+      acceptanceList = <Map<String, String>>[];
+    }
+    int index = itemIndex!;
+    if (index >= 0 && index < acceptanceList.length) {
+      acceptanceList.removeAt(index);
+    }
+    if (panelId == PanelID.manAcceptanceList) {
       setState(() {
         widget.manAcceptanceList = acceptanceList;
       });
@@ -325,6 +356,9 @@ class _EditPageState extends State<EditPage> {
                     _addParentAcceptanceRate(
                         context, PanelID.womanAcceptanceList);
                   },
+                  deleteButtonDidtap: ((panelId, itemIndex) {
+                    _deleteParentAcceptanceRateList(panelId, itemIndex);
+                  }),
                 ),
                 ParentBabyAcceptancePanel(
                   panelId: PanelID.womanAcceptanceList,
@@ -333,6 +367,9 @@ class _EditPageState extends State<EditPage> {
                   addButtonDidTap: () {
                     _addParentAcceptanceRate(
                         context, PanelID.womanAcceptanceList);
+                  },
+                  deleteButtonDidtap: (panelId, itemIndex) {
+                    _deleteParentAcceptanceRateList(panelId, itemIndex);
                   },
                 ),
               ],

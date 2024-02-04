@@ -9,14 +9,17 @@ class DeleteInfoButton extends StatefulWidget {
   final String careerName;
   final String acceptionRate;
   final PanelID panelId;
-
+  final int? itemIndex;
+  final Function(PanelID panelId, int? itemIndex)? deleteButtonDidtap;
 
   const DeleteInfoButton({
     super.key,
     required this.panelId,
     required this.careerName,
     required this.acceptionRate,
-    });
+    this.itemIndex,
+    this.deleteButtonDidtap,
+  });
 
   @override
   State<DeleteInfoButton> createState() => _DeleteInfoButtonState();
@@ -83,6 +86,19 @@ class _DeleteInfoButtonState extends State<DeleteInfoButton> {
                 width: 16,
                 height: 16,
               )),
+          Positioned(
+            top: -16,
+            right: -16,
+            child: Container(
+              width: 32,
+              height: 32,
+              child: GestureDetector(onTap: (() {
+                if (widget.deleteButtonDidtap != null) {
+                  widget.deleteButtonDidtap!(widget.panelId, widget.itemIndex);
+                }
+              })),
+            ),
+          ),
         ],
       ),
     );

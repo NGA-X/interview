@@ -16,12 +16,14 @@ class ParentBabyAcceptancePanel extends StatefulWidget {
   VoidCallback? addButtonDidTap;
   List<Map<String, String>>? parentAcceptanceList;
 
+  final Function(PanelID panelId, int? itemIndex)? deleteButtonDidtap;
   ParentBabyAcceptancePanel({
     super.key,
     required this.panelId,
     required this.panelTitle,
     required this.parentAcceptanceList,
     this.addButtonDidTap,
+    this.deleteButtonDidtap,
   });
 
   @override
@@ -56,6 +58,7 @@ class _ParentBabyAcceptancePanelState extends State<ParentBabyAcceptancePanel> {
             parentAcceptanceList: widget.parentAcceptanceList,
             panelId: widget.panelId,
             addButtonDidTap: widget.addButtonDidTap,
+            deleteButtonDidtap: widget.deleteButtonDidtap,
           ),
         ],
       ),

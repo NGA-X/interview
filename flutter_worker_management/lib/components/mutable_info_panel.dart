@@ -13,11 +13,13 @@ class MutableInfoPanel extends StatefulWidget {
   final PanelID panelId;
   VoidCallback? addButtonDidTap;
 
+  final Function(PanelID panelId, int? itemIndex)? deleteButtonDidtap;
   MutableInfoPanel({
     super.key,
     required this.parentAcceptanceList,
     required this.panelId,
     this.addButtonDidTap,
+    this.deleteButtonDidtap,
   });
 
   @override
@@ -37,6 +39,8 @@ class _MutableInfoPanelState extends State<MutableInfoPanel> {
         careerName: acceptance["careerName"] as String,
         acceptionRate: acceptance["acceptionRate"] as String,
         panelId: widget.panelId,
+        itemIndex: i,
+        deleteButtonDidtap: widget.deleteButtonDidtap,
       );
       widgetList.add(item);
       if (i < acceptanceList.length) {
