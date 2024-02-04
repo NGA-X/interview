@@ -37,6 +37,7 @@ class EditPage extends StatefulWidget {
 }
 
 class _EditPageState extends State<EditPage> {
+  /// halfway
   void _updateHalfwayRate(List values, PanelID panelID) {
     if (values.length < 3) {
       print("Invalid Input!");
@@ -99,6 +100,7 @@ class _EditPageState extends State<EditPage> {
     return acceptanceStr; //"10%/20%/30%";
   }
 
+  /// average
   String _averagePanelContent(String? inputValue, PanelID panelID) {
     String averageContent = "";
     if (inputValue == null) {
@@ -164,7 +166,6 @@ class _EditPageState extends State<EditPage> {
   }
 
   void _updateAverageContent(List values, PanelID panelID) {
-    print("aaaaaaa");
     if (values.length < 1) {
       print("Invalid Input!");
       return;
@@ -194,6 +195,54 @@ class _EditPageState extends State<EditPage> {
         break;
       default:
         return;
+    }
+  }
+
+  /// Parent baby
+  void _addParentAcceptanceRate(BuildContext context, PanelID panelId) {
+    showDialog(
+        context: context,
+        builder: ((context) {
+          List<KeyboardConfig> keyboardConfigs = [
+            KeyboardConfig("職種", "職種を入力してください", TextInputType.text),
+            KeyboardConfig("割合(単位：%)", "割合を入力してください", TextInputType.number),
+          ];
+          String title = panelId == PanelID.manAcceptanceList
+              ? "育児休業取得率（男性）"
+              : "育児休業取得率（女性）";
+          EditInfoDialog dialog = EditInfoDialog(
+              config: DialogConfig(title, keyboardConfigs),
+              panelId: panelId,
+              finishInputValues: _addParentAcceptanceRateList);
+          return dialog;
+        }));
+  }
+
+  void _addParentAcceptanceRateList(List values, PanelID panelID) {
+    if (values.length < 2) {
+      print("Invalid Input!");
+      return;
+    }
+    List<Map<String, String>>? acceptanceList =
+        panelID == PanelID.manAcceptanceList
+            ? widget.manAcceptanceList
+            : widget.womanAcceptanceList;
+    if (acceptanceList == null) {
+      acceptanceList = <Map<String, String>>[];
+    }
+    Map<String, String> acceptance = {
+      "careerName": values[0],
+      "acceptionRate": values[1]
+    };
+    acceptanceList.add(acceptance);
+    if (panelID == PanelID.manAcceptanceList) {
+      setState(() {
+        widget.manAcceptanceList = acceptanceList;
+      });
+    } else {
+      setState(() {
+        widget.womanAcceptanceList = acceptanceList;
+      });
     }
   }
 
@@ -269,13 +318,23 @@ class _EditPageState extends State<EditPage> {
                           context, PanelID.averageExtraWorkerCount);
                     })),
                 ParentBabyAcceptancePanel(
-                    panelId: PanelID.manAcceptanceList,
-                    panelTitle: "育児休業取得率（男性）",
-                    parentAcceptanceList: widget.manAcceptanceList),
+                  panelId: PanelID.manAcceptanceList,
+                  panelTitle: "育児休業取得率（男性）",
+                  parentAcceptanceList: widget.manAcceptanceList,
+                  addButtonDidTap: () {
+                    _addParentAcceptanceRate(
+                        context, PanelID.womanAcceptanceList);
+                  },
+                ),
                 ParentBabyAcceptancePanel(
-                    panelId: PanelID.womanAcceptanceList,
-                    panelTitle: "育児休業取得率（女性）",
-                    parentAcceptanceList: widget.womanAcceptanceList),
+                  panelId: PanelID.womanAcceptanceList,
+                  panelTitle: "育児休業取得率（女性）",
+                  parentAcceptanceList: widget.womanAcceptanceList,
+                  addButtonDidTap: () {
+                    _addParentAcceptanceRate(
+                        context, PanelID.womanAcceptanceList);
+                  },
+                ),
               ],
             ),
           ),

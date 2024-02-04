@@ -22,7 +22,7 @@ enum PanelID {
 }
 
 class KeyboardConfig {
-  final String keyboardTitle;
+  String keyboardTitle;
   final String keyboardHint;
   final TextInputType type;
   KeyboardConfig(this.keyboardTitle, this.keyboardHint, this.type);
@@ -30,6 +30,6 @@ class KeyboardConfig {
 
 class DialogConfig {
   final String title;
-  final List<KeyboardConfig> keyboardConfigs;
+  List<KeyboardConfig> keyboardConfigs;
   DialogConfig(this.title, this.keyboardConfigs);
 }

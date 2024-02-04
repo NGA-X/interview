@@ -7,9 +7,12 @@ import 'package:flutter_worker_management/utils/ny_color.dart';
 
 class AddInfoButton extends StatelessWidget {
   final PanelID panelId;
-  const AddInfoButton({
+  VoidCallback? addButtonDidTap;
+
+  AddInfoButton({
     super.key,
     required this.panelId,
+    this.addButtonDidTap,
   });
 
   @override
@@ -41,6 +44,13 @@ class AddInfoButton extends StatelessWidget {
             size: 16,
             color: NYColor.fontColor(),
           ),
+          Positioned(
+            top: 0,
+            left: 0,
+            width: maxWidth,
+            height: 32,
+            child: GestureDetector(onTap: addButtonDidTap),
+          )
         ],
       ),
     );

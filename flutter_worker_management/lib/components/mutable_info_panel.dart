@@ -11,11 +11,13 @@ class MutableInfoPanel extends StatefulWidget {
   // [{"careerName":"aaa", "acceptionRate": "bbb"}]
   List<Map<String, String>>? parentAcceptanceList;
   final PanelID panelId;
+  VoidCallback? addButtonDidTap;
 
   MutableInfoPanel({
     super.key,
     required this.parentAcceptanceList,
     required this.panelId,
+    this.addButtonDidTap,
   });
 
   @override
@@ -32,9 +34,10 @@ class _MutableInfoPanelState extends State<MutableInfoPanel> {
     for (var i = 0; i < acceptanceList.length; i++) {
       Map<String, String> acceptance = acceptanceList[i];
       Widget item = DeleteInfoButton(
-          careerName: acceptance["careerName"] as String,
-          acceptionRate: acceptance["acceptionRate"] as String,
-          panelId: widget.panelId,);
+        careerName: acceptance["careerName"] as String,
+        acceptionRate: acceptance["acceptionRate"] as String,
+        panelId: widget.panelId,
+      );
       widgetList.add(item);
       if (i < acceptanceList.length) {
         double w =
@@ -46,6 +49,7 @@ class _MutableInfoPanelState extends State<MutableInfoPanel> {
             border: Border.all(color: NYColor.lineColor()),
           ),
         );
+        widgetList.add(line);
       }
     }
     return widgetList;
@@ -54,6 +58,7 @@ class _MutableInfoPanelState extends State<MutableInfoPanel> {
   List<Widget> _buildAllItems(BuildContext context) {
     Widget addButton = AddInfoButton(
       panelId: widget.panelId,
+      addButtonDidTap: widget.addButtonDidTap,
     );
     List<Widget> widgetList = _buildDeleteItems(context);
     widgetList.add(addButton);

@@ -13,7 +13,7 @@ import 'package:flutter_worker_management/utils/ny_color.dart';
 class ParentBabyAcceptancePanel extends StatefulWidget {
   final PanelID panelId;
   final String panelTitle;
-  VoidCallback? editButtonDidTap;
+  VoidCallback? addButtonDidTap;
   List<Map<String, String>>? parentAcceptanceList;
 
   ParentBabyAcceptancePanel({
@@ -21,11 +21,12 @@ class ParentBabyAcceptancePanel extends StatefulWidget {
     required this.panelId,
     required this.panelTitle,
     required this.parentAcceptanceList,
-    this.editButtonDidTap,
+    this.addButtonDidTap,
   });
 
   @override
-  State<ParentBabyAcceptancePanel> createState() => _ParentBabyAcceptancePanelState();
+  State<ParentBabyAcceptancePanel> createState() =>
+      _ParentBabyAcceptancePanelState();
 }
 
 class _ParentBabyAcceptancePanelState extends State<ParentBabyAcceptancePanel> {
@@ -51,7 +52,11 @@ class _ParentBabyAcceptancePanelState extends State<ParentBabyAcceptancePanel> {
             ),
           ),
           Expanded(flex: 1, child: Container()),
-          MutableInfoPanel(parentAcceptanceList: widget.parentAcceptanceList, panelId: widget.panelId,),
+          MutableInfoPanel(
+            parentAcceptanceList: widget.parentAcceptanceList,
+            panelId: widget.panelId,
+            addButtonDidTap: widget.addButtonDidTap,
+          ),
         ],
       ),
     );
