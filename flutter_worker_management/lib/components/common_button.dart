@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_worker_management/utils/ny_color.dart';
 
 class CommonButton extends StatelessWidget {
   final String text;
@@ -10,14 +11,26 @@ class CommonButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(8)),
-      ),
-      child: MaterialButton(
-        onPressed: onPressed,
-        color: Theme.of(context).primaryColor,
-        child: Text(text),
-      ),
-    );
+        width: 237,
+        height: 45,
+        margin: EdgeInsets.only(top: 5),
+        decoration: BoxDecoration(
+          color: NYColor.fontColor(),
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+        ),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Text(
+              "确定",
+              style: TextStyle(fontSize: 16, color: Colors.white),
+            ),
+            Center(
+              child: GestureDetector(
+                onTap: onPressed,
+              ),
+            ),
+          ],
+        ));
   }
 }

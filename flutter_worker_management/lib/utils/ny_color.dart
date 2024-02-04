@@ -1,6 +1,18 @@
 import 'package:flutter/material.dart';
 
 class NYColor {
+  static Color lineColor() {
+    return NYColor.formColor("#E1E1E1");
+  }
+
+  static Color fontColor() {
+    return NYColor.fontColorAlpha(1.0);
+  }
+
+  static Color fontColorAlpha(double alpha) {
+    return NYColor.formColorAlpha("#007FFF", alpha);
+  }
+
   static Color formColorAlpha(String rgbHex, double alpha) {
     int a = NYColor.alphaToInt(alpha);
     final buffer = StringBuffer();

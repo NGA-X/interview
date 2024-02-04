@@ -13,9 +13,20 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'Worker Management',
-        home: EditPage(),
+        home: EditPage(
+          halfwayAcceptance: {
+            "one": "10",
+            "two": "20",
+            "three": "30",
+          },
+          manAcceptanceList: [
+            {"careerName": "技術職", "acceptionRate": "34%"},
+            {"careerName": "専門職", "acceptionRate": "50%"},
+            {"careerName": "正社員", "acceptionRate": "100%"},
+          ],
+        ),
         theme: ThemeData(
-          primaryColor: NYColor.formColor("#007FFF"),
+          primaryColor: NYColor.fontColor(),
         ));
   }
 }

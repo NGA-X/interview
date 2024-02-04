@@ -2,24 +2,32 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_worker_management/utils/basics.dart';
 import 'package:flutter_worker_management/utils/ny_color.dart';
 
-class EditInfoButton extends StatelessWidget {
+class EditInfoButton extends StatefulWidget {
   final String acceptionRate;
+  final PanelID panelID;
   double? maxWidth;
   VoidCallback? editButtonDidTap;
   EditInfoButton({
     super.key,
     required this.acceptionRate,
+    required this.panelID,
     this.editButtonDidTap,
     this.maxWidth,
   });
 
   @override
+  State<EditInfoButton> createState() => _EditInfoButtonState();
+}
+
+class _EditInfoButtonState extends State<EditInfoButton> {
+  @override
   Widget build(BuildContext context) {
     double buttonWidth = 100;
-    if (maxWidth != null) {
-      buttonWidth = maxWidth!.toDouble();
+    if (widget.maxWidth != null) {
+      buttonWidth = widget.maxWidth!.toDouble();
     }
     return Container(
       width: buttonWidth,
@@ -29,19 +37,19 @@ class EditInfoButton extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             DottedBorder(
-              color: NYColor.formColor("#007FFF"),
+              color: NYColor.fontColor(),
               borderType: BorderType.RRect,
               radius: Radius.circular(4),
               padding: EdgeInsets.all(0),
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(4)),
                 child: Container(
-                  color: NYColor.formColorAlpha("#007FFF", 0.1),
+                  color: NYColor.fontColorAlpha(0.1),
                 ),
               ),
             ),
             Text(
-              acceptionRate,
+              widget.acceptionRate,
               softWrap: true,
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
@@ -64,7 +72,7 @@ class EditInfoButton extends StatelessWidget {
               width: buttonWidth,
               height: 32,
               child: GestureDetector(
-                onTap: editButtonDidTap,
+                onTap: widget.editButtonDidTap,
               ),
             ),
           ]),

@@ -4,20 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_worker_management/components/edit_info_button.dart';
+import 'package:flutter_worker_management/utils/basics.dart';
 import 'package:flutter_worker_management/utils/ny_color.dart';
 
-class WorkerAveragePanel extends StatelessWidget {
+class WorkerAveragePanel extends StatefulWidget {
   final String panelTitle;
   final String panelDetail;
-  VoidCallback? editButtonDidTap;
+  final PanelID panelId;
+
+  Function(PanelID panelId)? editButtonDidTap;
 
   WorkerAveragePanel({
     super.key,
     required this.panelTitle,
     required this.panelDetail,
+    required this.panelId,
     this.editButtonDidTap,
   });
 
+  @override
+  State<WorkerAveragePanel> createState() => _WorkerAveragePanelState();
+}
+
+class _WorkerAveragePanelState extends State<WorkerAveragePanel> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,7 +34,7 @@ class WorkerAveragePanel extends StatelessWidget {
       padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: NYColor.formColor("#E1E1E1"))),
+          border: Border.all(color: NYColor.lineColor())),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
@@ -33,7 +42,7 @@ class WorkerAveragePanel extends StatelessWidget {
           Container(
             width: 155,
             child: Text(
-              panelTitle,
+              widget.panelTitle,
               textAlign: TextAlign.left,
               style:
                   TextStyle(fontSize: 12, color: NYColor.formColor("#111111")),
@@ -44,8 +53,13 @@ class WorkerAveragePanel extends StatelessWidget {
             flex: 1,
           ),
           EditInfoButton(
-            acceptionRate: panelDetail,
-            editButtonDidTap: editButtonDidTap,
+            panelID: widget.panelId,
+            acceptionRate: widget.panelDetail,
+            editButtonDidTap: () {
+              if (widget.editButtonDidTap != null) {
+                widget.editButtonDidTap!(widget.panelId);
+              }
+            },
             maxWidth: 68,
           )
         ],
