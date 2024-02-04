@@ -22,7 +22,10 @@ class EditInfoDialog extends StatelessWidget {
   List<Widget> _DialogWidgetItems(BuildContext context) {
     List<Widget> items = <Widget>[];
     if (config.title.length > 0) {
-      items.add(Text(config.title));
+      items.add(Text(
+        config.title,
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+      ));
     }
     inputItems = <InputTextItem>[];
     for (var i = 0; i < config.keyboardConfigs.length; i++) {
@@ -47,15 +50,22 @@ class EditInfoDialog extends StatelessWidget {
     return items;
   }
 
-  double _DialogWidgetItemsHeight() {
+  double _DialogWidgetItemsHeight(PanelID panelID) {
     double h = 0.0;
-    if (config.title.length > 0) {
-      h += 57;
+    switch (panelID) {
+      case PanelID.averageExtraWorkTime:
+      case PanelID.averageFormalWorkerYear:
+      case PanelID.averageWorkerAge:
+        return 186.0;
+      case PanelID.averageExtraWorkerCount:
+        return 216.0;
+      case PanelID.halfwayAcceptance:
+      case PanelID.halfway2Acceptance:
+        return 384.0;
+      case PanelID.manAcceptanceList:
+      case PanelID.womanAcceptanceList:
+        return 302.0;
     }
-    h += 20;
-    h += (30 + 44 + 5) * config.keyboardConfigs.length;
-    h += 40;
-    return h;
   }
 
   @override
@@ -68,7 +78,7 @@ class EditInfoDialog extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(16)),
         ),
-        height: _DialogWidgetItemsHeight(),
+        height: _DialogWidgetItemsHeight(panelId),
         child: Column(
           children: _DialogWidgetItems(context),
         ),

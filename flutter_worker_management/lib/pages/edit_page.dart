@@ -124,6 +124,79 @@ class _EditPageState extends State<EditPage> {
     return averageContent;
   }
 
+  void _editAverageContent(BuildContext context, PanelID panelId) {
+    showDialog(
+        context: context,
+        builder: ((context) {
+          List<KeyboardConfig> keyboardConfigs = [];
+          KeyboardConfig keyboardConfig;
+          switch (panelId) {
+            case PanelID.averageExtraWorkTime:
+              keyboardConfig =
+                  KeyboardConfig("月平均所定外労働時間（単位：時間）", "", TextInputType.number);
+              break;
+            case PanelID.averageExtraWorkerCount:
+              keyboardConfig = KeyboardConfig(
+                  "平均の法定時間外労働60時間以上の労働者の数（単位：人）", "", TextInputType.number);
+              break;
+            case PanelID.averageFormalWorkerYear:
+              keyboardConfig = KeyboardConfig(
+                  "正社員の平均継続勤務年数（単位：年）", "", TextInputType.number);
+              break;
+            case PanelID.averageWorkerAge:
+              keyboardConfig =
+                  KeyboardConfig("従業員の平均年齢（単位：歳）", "", TextInputType.number);
+              break;
+            default:
+              keyboardConfig =
+                  KeyboardConfig("前年度(単位：%)", "", TextInputType.number);
+          }
+          keyboardConfigs.add(keyboardConfig);
+          String title = "";
+          EditInfoDialog dialog = EditInfoDialog(
+              config: DialogConfig(title, keyboardConfigs),
+              panelId: panelId,
+              finishInputValues: ((values, panelID) {
+                _updateAverageContent(values, panelID);
+              }));
+          return dialog;
+        }));
+  }
+
+  void _updateAverageContent(List values, PanelID panelID) {
+    print("aaaaaaa");
+    if (values.length < 1) {
+      print("Invalid Input!");
+      return;
+    }
+    String averageContent = values.first;
+
+    switch (panelID) {
+      case PanelID.averageExtraWorkTime:
+        setState(() {
+          widget.averageExtraWorkTime = averageContent;
+        });
+        break;
+      case PanelID.averageExtraWorkerCount:
+        setState(() {
+          widget.averageExtraWorkerCount = averageContent;
+        });
+        break;
+      case PanelID.averageFormalWorkerYear:
+        setState(() {
+          widget.averageFormalWorkerYear = averageContent;
+        });
+        break;
+      case PanelID.averageWorkerAge:
+        setState(() {
+          widget.averageWorkerAge = averageContent;
+        });
+        break;
+      default:
+        return;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -162,24 +235,39 @@ class _EditPageState extends State<EditPage> {
                     panelTitle: "正社員の平均継続勤務年数",
                     panelDetail: _averagePanelContent(
                         widget.averageFormalWorkerYear,
-                        PanelID.averageFormalWorkerYear)),
+                        PanelID.averageFormalWorkerYear),
+                    editButtonDidTap: ((panelId) {
+                      _editAverageContent(
+                          context, PanelID.averageFormalWorkerYear);
+                    })),
                 WorkerAveragePanel(
                     panelId: PanelID.averageWorkerAge,
                     panelTitle: "従業員の平均年齢",
-                    panelDetail: _averagePanelContent(widget.averageWorkerAge,
-                        PanelID.averageFormalWorkerYear)),
+                    panelDetail: _averagePanelContent(
+                        widget.averageWorkerAge, PanelID.averageWorkerAge),
+                    editButtonDidTap: ((panelId) {
+                      _editAverageContent(context, PanelID.averageWorkerAge);
+                    })),
                 WorkerAveragePanel(
                     panelId: PanelID.averageExtraWorkTime,
                     panelTitle: "月平均所定外労働時間",
                     panelDetail: _averagePanelContent(
                         widget.averageExtraWorkTime,
-                        PanelID.averageFormalWorkerYear)),
+                        PanelID.averageExtraWorkTime),
+                    editButtonDidTap: ((panelId) {
+                      _editAverageContent(
+                          context, PanelID.averageExtraWorkTime);
+                    })),
                 WorkerAveragePanel(
                     panelId: PanelID.averageExtraWorkerCount,
                     panelTitle: "平均の法定時間外労働60時間以上の労働者の数",
                     panelDetail: _averagePanelContent(
                         widget.averageExtraWorkerCount,
-                        PanelID.averageFormalWorkerYear)),
+                        PanelID.averageExtraWorkerCount),
+                    editButtonDidTap: ((panelId) {
+                      _editAverageContent(
+                          context, PanelID.averageExtraWorkerCount);
+                    })),
                 ParentBabyAcceptancePanel(
                     panelId: PanelID.manAcceptanceList,
                     panelTitle: "育児休業取得率（男性）",
