@@ -248,9 +248,6 @@ class _EditPageState extends State<EditPage> {
 
   /// Delete
   void _deleteParentAcceptanceRateList(PanelID panelId, int? itemIndex) {
-    print("?????");
-    print(itemIndex);
-    print(panelId);
     if (itemIndex == null) {
       return;
     }

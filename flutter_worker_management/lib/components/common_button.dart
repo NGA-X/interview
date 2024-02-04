@@ -13,7 +13,7 @@ class CommonButton extends StatelessWidget {
     return Container(
         width: 237,
         height: 45,
-        margin: EdgeInsets.only(top: 5),
+        margin: EdgeInsets.only(top: 10),
         decoration: BoxDecoration(
           color: NYColor.fontColor(),
           borderRadius: BorderRadius.all(Radius.circular(8)),

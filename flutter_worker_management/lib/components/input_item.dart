@@ -29,9 +29,18 @@ class InputTextItem extends StatelessWidget {
               ),
             ),
           ),
-          TextField(
-            controller: _controller,
-            keyboardType: config.type,
+          Container(
+            margin: EdgeInsets.only(bottom: 8),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+              color: NYColor.formColor("#F7F7F7"),
+            ),
+            child: TextField(
+              decoration: InputDecoration(
+                  border: InputBorder.none, hintText: config.keyboardHint),
+              controller: _controller,
+              keyboardType: config.type,
+            ),
           ),
         ],
       ),
