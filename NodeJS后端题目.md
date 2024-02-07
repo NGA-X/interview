@@ -1,4 +1,4 @@
-### 使用 Nest.JS 搭建项目工程
+### 使用 Nest.JS 或 Midway.JS 搭建项目工程
 
 开发一个一套的 Todo 后端接口项目
 
